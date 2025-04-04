@@ -22,7 +22,7 @@ export default function Home() {
     <Layout className="min-h-screen">
       <Navigation />
       <DashboardHeader timeFilter={timeFilter} onTimeFilterChange={setTimeFilter} />
-      <Content className="bg-gray-50">
+      <Content className="bg-neutral-input">
         <DashboardContent data={data} isLoading={isLoading} />
       </Content>
     </Layout>

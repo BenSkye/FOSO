@@ -9,11 +9,36 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#1677FF',
-        secondary: '#6B7280',
-        success: '#52C41A',
-        warning: '#FAAD14',
-        error: '#FF4D4F',
+        primary: {
+          DEFAULT: '#003C96', // Main blue color
+          light: '#0052CC',   // Lighter blue for interactive elements
+          dark: '#002B6B',    // Darker blue for hover states
+        },
+        secondary: {
+          DEFAULT: '#52C41A', // Success green
+          light: '#73D13D',   // Lighter green
+          dark: '#389E0D',    // Darker green
+        },
+        warning: {
+          DEFAULT: '#FF8B26', // Warning orange
+          light: '#FFA94D',   // Lighter orange
+          dark: '#D46B00',    // Darker orange
+        },
+        danger: {
+          DEFAULT: '#FF4D4F', // Error red
+          light: '#FF7875',   // Lighter red
+          dark: '#CF1322',    // Darker red
+        },
+        neutral: {
+          title: '#1F2937',    // Title text
+          body: '#4B5563',     // Body text
+          label: '#6B7280',    // Label text
+          placeholder: '#9CA3AF', // Placeholder text
+          line: '#E5E7EB',     // Lines/borders
+          input: '#F3F4F6',    // Input background
+          white: '#FFFFFF',    // White
+          black: '#000000',    // Black
+        },
         'gray-light': '#F5F5F5',
         'gray-dark': '#8C8C8C',
       },

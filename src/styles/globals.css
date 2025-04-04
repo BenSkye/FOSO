@@ -21,17 +21,17 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  @apply bg-neutral-input;
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #888;
+  @apply bg-neutral-line;
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  @apply bg-neutral-placeholder;
 }
 
 /* Custom Ant Design overrides */
@@ -53,7 +53,7 @@ body {
 }
 
 .ant-progress-text {
-  @apply !text-gray-600;
+  @apply !text-neutral-body;
 }
 
 .ant-table {
@@ -61,11 +61,11 @@ body {
 }
 
 .ant-table-thead > tr > th {
-  @apply !bg-gray-50 !font-medium;
+  @apply !bg-neutral-input !font-medium;
 }
 
 .ant-table-tbody > tr > td {
-  @apply !border-b !border-gray-100;
+  @apply !border-b !border-neutral-line/20;
 }
 
 .ant-select-selector {
@@ -77,12 +77,12 @@ body {
 }
 
 .custom-select-dropdown .ant-select-item-option-selected {
-  @apply !bg-blue-50;
+  @apply !bg-primary-light/20;
 }
 
 /* Navigation styles */
 .nav-link {
-  @apply px-4 py-2 text-sm text-gray-600 hover:text-primary transition-colors;
+  @apply px-4 py-2 text-sm text-neutral-body hover:text-primary transition-colors;
 }
 
 .nav-link.active {

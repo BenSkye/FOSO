@@ -18,7 +18,7 @@ export function Providers({ children }) {
       <ConfigProvider
         theme={{
           token: {
-            colorPrimary: '#1677FF',
+            colorPrimary: 'rgb(var(--primary-color))',
             borderRadius: 6,
           },
         }}
