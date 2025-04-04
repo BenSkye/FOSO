@@ -5,7 +5,7 @@ import { CalendarOutlined } from '@ant-design/icons'
 
 export const DashboardHeader = ({ timeFilter, onTimeFilterChange }) => {
   return (
-    <div className="flex items-center justify-between w-full bg-white px-6 py-4 border-b">
+    <div className="flex items-center justify-between w-full bg-neutral-white px-6 py-4 border-b">
       <h1 className="text-xl font-medium">Top Sản Phẩm Sản Xuất Nhiều Nhất</h1>
       <Select
         value={timeFilter}

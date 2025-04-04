@@ -1,6 +1,6 @@
 'use client'
 
-import { Table, Skeleton } from 'antd'
+import { Table, Skeleton, Progress } from 'antd'
 import { Column } from '@ant-design/plots'
 import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons'
 import { Card, CardHeader } from './ui/Card'
@@ -10,7 +10,7 @@ import { Empty } from './ui/Empty'
 
 
 const LoadingSkeleton = () => (
-  <div className="space-y-6 p-6 bg-gray-50">
+  <div className="space-y-6 p-6 bg-neutral-input">
     {/* Top Products Skeleton */}
     <div className="grid grid-cols-5 gap-4">
       {[...Array(5)].map((_, i) => (
@@ -51,8 +51,8 @@ const EmptyState = () => (
     <div className="grid grid-cols-5 gap-4">
       {[...Array(5)].map((_, i) => (
         <Card key={i}>
-          <div className="text-2xl font-bold text-[#1677FF]">0</div>
-          <div className="text-sm text-gray-500">Chưa có mặt hàng</div>
+          <div className="text-2xl font-bold text-primary">0</div>
+          <div className="text-sm text-neutral-label">Chưa có mặt hàng</div>
         </Card>
       ))}
     </div>
@@ -88,16 +88,16 @@ const EmptyState = () => (
           <CircleProgress value={0} total={0} />
           <div className="grid grid-cols-3 gap-4 mt-6">
             <div>
-              <div className="text-xl font-bold text-[#FF8B26]">0</div>
-              <div className="text-sm text-gray-500">Chưa hoàn thành</div>
+              <div className="text-xl font-bold text-warning">0</div>
+              <div className="text-sm text-neutral-label">Chưa hoàn thành</div>
             </div>
             <div>
-              <div className="text-xl font-bold text-[#1677FF]">0</div>
-              <div className="text-sm text-gray-500">Đang sản xuất</div>
+              <div className="text-xl font-bold text-primary">0</div>
+              <div className="text-sm text-neutral-label">Đang sản xuất</div>
             </div>
             <div>
-              <div className="text-xl font-bold text-[#52C41A]">0</div>
-              <div className="text-sm text-gray-500">Hoàn thành</div>
+              <div className="text-xl font-bold text-secondary">0</div>
+              <div className="text-sm text-neutral-label">Hoàn thành</div>
             </div>
           </div>
         </div>
@@ -120,8 +120,8 @@ const EmptyState = () => (
         />
         <div className="space-y-4">
           {[...Array(7)].map((_, i) => (
-            <div key={i} className="bg-gray-50 p-3 rounded">
-              <div className="text-sm text-gray-500">Chưa có mặt hàng</div>
+            <div key={i} className="bg-neutral-input p-3 rounded">
+              <div className="text-sm text-neutral-label">Chưa có mặt hàng</div>
             </div>
           ))}
         </div>
@@ -177,11 +177,11 @@ export const DashboardContent = ({ data, isLoading }) => {
     label: {
       position: 'top',
       style: {
-        fill: '#666',
+        fill: 'var(--neutral-body)',
         opacity: 0.9,
       },
     },
-    color: ['#1677FF', '#52C41A'],
+    color: ['primary.DEFAULT', 'secondary.DEFAULT'],
     tooltip: {
       shared: true,
     },
@@ -193,15 +193,15 @@ export const DashboardContent = ({ data, isLoading }) => {
   }
 
   return (
-    <div className="space-y-6 p-6 bg-white">
+    <div className="space-y-6 p-6 bg-neutral-white">
 
       {/* Top Products */}
       <div className="grid grid-cols-5 gap-4">
         {data.topProducts.map((product) => (
           <Card key={product.id}>
-            <div className="text-2xl font-bold text-[#1677FF]">{product.count}</div>
-            <div className="text-sm text-gray-600 mt-1">{product.name}</div>
-            <div className={`text-xs mt-2 flex items-center ${product.growth >= 0 ? 'text-[#52C41A]' : 'text-[#FF4D4F]'}`}>
+            <div className="text-2xl font-bold text-primary">{product.count}</div>
+            <div className="text-sm text-neutral-body mt-1">{product.name}</div>
+            <div className={`text-xs mt-2 flex items-center ${product.growth >= 0 ? 'text-secondary' : 'text-danger'}`}>
               {product.growth >= 0 ? <ArrowUpOutlined /> : <ArrowDownOutlined />}
               <span className="ml-1">{Math.abs(product.growth)}%</span>
             </div>
@@ -248,22 +248,34 @@ export const DashboardContent = ({ data, isLoading }) => {
             extra={<TimeRangeSelect defaultValue="today" />}
           />
           <div className="text-center">
-            <CircleProgress
-              value={data.productionStatus.completed}
-              total={data.productionStatus.total}
+            <Progress
+              type="circle"
+              percent={Math.round((data.productionStatus.completed / data.productionStatus.total) * 100)}
+              format={(percent) => (
+                <div>
+                  <div className="text-2xl font-bold">{data.productionStatus.total}</div>
+                  <div className="text-sm text-neutral-label">Lệnh sản xuất</div>
+                </div>
+              )}
+              strokeColor={{
+                '0%': 'warning.DEFAULT',
+                '50%': 'primary.DEFAULT',
+                '100%': 'secondary.DEFAULT',
+              }}
+              className="mb-4"
             />
             <div className="grid grid-cols-3 gap-4 mt-6">
               <div>
-                <div className="text-xl font-bold text-[#FF8B26]">{data.productionStatus.pending}</div>
-                <div className="text-sm text-gray-500">Chưa hoàn thành</div>
+                <div className="text-xl font-bold text-warning">{data.productionStatus.pending}</div>
+                <div className="text-sm text-neutral-label">Chưa hoàn thành</div>
               </div>
               <div>
-                <div className="text-xl font-bold text-[#1677FF]">{data.productionStatus.inProgress}</div>
-                <div className="text-sm text-gray-500">Đang sản xuất</div>
+                <div className="text-xl font-bold text-primary">{data.productionStatus.inProgress}</div>
+                <div className="text-sm text-neutral-label">Đang sản xuất</div>
               </div>
               <div>
-                <div className="text-xl font-bold text-[#52C41A]">{data.productionStatus.completed}</div>
-                <div className="text-sm text-gray-500">Hoàn thành</div>
+                <div className="text-xl font-bold text-secondary">{data.productionStatus.completed}</div>
+                <div className="text-sm text-neutral-label">Hoàn thành</div>
               </div>
             </div>
           </div>
@@ -287,13 +299,16 @@ export const DashboardContent = ({ data, isLoading }) => {
           {data.productionProgress.map((item) => (
             <div key={item.name} className="mb-4 last:mb-0">
               <div className="flex justify-between mb-1">
-                <span className="text-sm text-gray-600">{item.name}</span>
-                <span className="text-sm font-medium">{item.total} cái ({item.progress}%)</span>
+                <span className="text-sm text-neutral-body">{item.name}</span>
+                <span className="text-sm font-medium text-neutral-title">
+                  {item.total} cái ({item.progress}%)
+                </span>
               </div>
-              <LineProgress
-                value={item.progress}
-                total={100}
-                color={item.progress === 100 ? '#52C41A' : '#1677FF'}
+              <Progress
+                percent={item.progress}
+                strokeColor={item.progress === 100 ? 'secondary.DEFAULT' : 'primary.DEFAULT'}
+                size="small"
+                showInfo={false}
               />
             </div>
           ))}
@@ -322,7 +337,7 @@ export const DashboardContent = ({ data, isLoading }) => {
               key: 'name',
               render: (text, record) => (
                 <div className="flex items-center">
-                  <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center mr-3">
+                  <div className="w-8 h-8 bg-neutral-input rounded-full flex items-center justify-center mr-3">
                     <img
                       src={record.avatar || `https://ui-avatars.com/api/?name=${text}&background=f5f5f5&color=666666`}
                       alt={text}
@@ -331,7 +346,7 @@ export const DashboardContent = ({ data, isLoading }) => {
                   </div>
                   <div>
                     <div className="font-medium">{text}</div>
-                    <div className="text-xs text-gray-500">{record.code}</div>
+                    <div className="text-xs text-neutral-label">{record.code}</div>
                   </div>
                 </div>
               ),
